@@ -1,0 +1,12 @@
+{
+  "name": "creatorforge-ai",
+  "version": "1.0.0",
+  "description": "Private AI video studio backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
