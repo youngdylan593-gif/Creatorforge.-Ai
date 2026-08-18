@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreatorForge AI - Studio Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0b0f19',
+                        cardBg: '#111827',
+                        cardHover: '#1f2937',
+                        accentIndigo: '#6366f1'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkBg text-gray-100 font-sans antialiased min-h-screen flex">
+    <aside class="w-64 bg-cardBg border-r border-gray-800 flex flex-col justify-between hidden md:flex">
+        <div class="p-6">
+            <h1 class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+                CreatorForge <span class="text-xs px-2 py-0.5 rounded bg-indigo-900 text-indigo-300">AI</span>
+            </h1>
+            <nav class="mt-8 space-y-2">
+                <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-accentIndigo/10 text-indigo-400 font-medium">Dashboard</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-cardHover text-gray-400">Character Studio</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-cardHover text-gray-400">Series & Story Bible</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-cardHover text-gray-400">Video Workflow</a>
+                <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-cardHover text-gray-400">Project Library</a>
+            </nav>
+        </div>
+    </aside>
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <header class="h-16 border-b border-gray-800 bg-cardBg/50 backdrop-blur px-8 flex items-center justify-between sticky top-0 z-20">
+            <div class="flex items-center gap-4">
+                <span class="text-sm text-gray-400">Engine Integration:</span>
+                <span class="px-3 py-1 bg-indigo-950 text-indigo-300 border border-indigo-800 rounded-lg text-xs font-semibold">Kling AI / Grok Imagine Ready</span>
+            </div>
+            <button onclick="triggerPipeline()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-xl shadow-lg transition">
+                + New Production
+            </button>
+        </header>
+        <div class="p-8 max-w-7xl mx-auto w-full space-y-8">
+            <div>
+                <h2 class="text-2xl font-bold tracking-tight">Studio Control Center</h2>
+                <p class="text-sm text-gray-400">Manage scripts, consistent characters, multi-modal generation, and renders.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="p-5 rounded-2xl bg-cardBg border border-gray-800 hover:border-gray-700 transition cursor-pointer">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4 font-bold">YT</div>
+                    <h3 class="font-semibold text-gray-200">YouTube Long-Form</h3>
+                    <p class="text-xs text-gray-400 mt-1">16:9 Cinematic production powered by Kling V3.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-cardBg border border-gray-800 hover:border-gray-700 transition cursor-pointer">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 font-bold">SH</div>
+                    <h3 class="font-semibold text-gray-200">YouTube Shorts</h3>
+                    <p class="text-xs text-gray-400 mt-1">9:16 Vertical video with auto audio-sync via Grok.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-cardBg border border-gray-800 hover:border-gray-700 transition cursor-pointer">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 font-bold">CS</div>
+                    <h3 class="font-semibold text-gray-200">Character Studio</h3>
+                    <p class="text-xs text-gray-400 mt-1">Consistent face models across multi-scene arcs.</p>
+                </div>
+                <div class="p-5 rounded-2xl bg-cardBg border border-gray-800 hover:border-gray-700 transition cursor-pointer">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-4 font-bold">SB</div>
+                    <h3 class="font-semibold text-gray-200">Story Bible & Universe</h3>
+                    <p class="text-xs text-gray-400 mt-1">Track world lore, timelines, and episode structures.</p>
+                </div>
+            </div>
+            <div class="p-6 rounded-2xl bg-cardBg border border-gray-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-gray-200">Active Render Queue</h3>
+                    <span id="render-status-badge" class="text-xs text-indigo-400 bg-indigo-950 px-2.5 py-1 rounded-full border border-indigo-800">Idle</span>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm mb-1">
+                        <span id="job-title" class="text-gray-300">No active generation tasks</span>
+                        <span id="job-progress" class="text-indigo-400 font-semibold">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="bg-indigo-500 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        async function triggerPipeline() {
+            document.getElementById('job-title').innerText = "Processing Kling/Grok asset generation...";
+            document.getElementById('render-status-badge').innerText = "Generating...";
+            document.getElementById('progress-bar').style.width = "40%";
+            document.getElementById('job-progress').innerText = "40%";
+            let res = await fetch('/api/render/video', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ projectId: 'proj_demo_01' })
+            });
+            let data = await res.json();
+            if(data.success) {
+                setTimeout(() => {
+                    document.getElementById('progress-bar').style.width = "100%";
+                    document.getElementById('job-progress').innerText = "100%";
+                    document.getElementById('render-status-badge').innerText = "Completed";
+                    document.getElementById('job-title').innerText = "Production Render Finished Successfully";
+                }, 1500);
+            }
+        }
+    </script>
+</body>
+</html>
